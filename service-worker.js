@@ -1,4 +1,4 @@
-const CACHE_NAME = 'qr-v12';
+const CACHE_NAME = 'v13';
 const urlsToCache = [
   '/index.html',
   '/gif.js',
