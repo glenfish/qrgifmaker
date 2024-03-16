@@ -505,10 +505,10 @@
         }
         // Listen for online status
         window.addEventListener("online", function (e) {
-          hideAll();
+          checkOnline();
         });
         window.addEventListener("offline", function (e) {
-          showAll();
+          checkOnline();
         });
       </script>
     </div>
