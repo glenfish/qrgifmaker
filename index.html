@@ -194,13 +194,30 @@
         </button>
       </div>
       <script>
+        function setupServiceWorker() {
+          if ("serviceWorker" in navigator) {
+            window.addEventListener("load", function () {
+              navigator.serviceWorker
+                .register("./service-worker.js")
+                .then(function (registration) {
+                  console.log(
+                    "ServiceWorker registration successful with scope: ",
+                    registration.scope
+                  );
+                })
+                .catch(function (err) {
+                  console.log("ServiceWorker registration failed: ", err);
+                });
+            });
+          }
+        }
         function showAll() {
           document.getElementById("onlineWarning").classList.add("hide");
-          document.getElementById("form-container").classList.remove("hide");
+          document.getElementById("app").classList.remove("hide");
         }
         function hideAll() {
           document.getElementById("onlineWarning").classList.remove("hide");
-          document.getElementById("form-container").classList.add("hide");
+          document.getElementById("app").classList.add("hide");
         }
         async function copyTextToClipboard(element) {
           const text = document.getElementById(element).value;
@@ -373,20 +390,7 @@
 
             URL.revokeObjectURL(objectURL);
           }
-          // set uop a service worker to cache the app
-          if ("serviceWorker" in navigator) {
-            navigator.serviceWorker
-              .register("/service-worker.js")
-              .then(function (registration) {
-                console.log(
-                  "Service Worker registered with scope:",
-                  registration.scope
-                );
-              })
-              .catch(function (err) {
-                console.log("Service Worker registration failed:", err);
-              });
-          }
+          setupServiceWorker();
           checkOnline();
         });
       </script>
