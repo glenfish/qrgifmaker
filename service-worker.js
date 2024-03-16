@@ -1,4 +1,4 @@
-const CACHE_NAME = 'v2';
+const CACHE_NAME = 'v3';
 const urlsToCache = [
   '/index.html',
   '/gif.js',
@@ -7,7 +7,7 @@ const urlsToCache = [
   '/index.min.js',
   '/libgif.js',
   './rubbable.js',
-  './gif.js',
+  './gif.worker.js',
   './service-worker.js'
 ];
 
