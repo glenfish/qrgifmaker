@@ -34,7 +34,7 @@
         margin-top: 40px;
       }
       .hide {
-        display: none;
+        display: none !important;
       }
       #qrCodeOutput {
         background-color: rgb(255, 255, 255);
@@ -119,7 +119,7 @@
     <script src="./gif.js"></script>
     <script src="./index.min.js"></script>
     <script type="text/javascript" src="./libgif.js"></script>
-    <script type="text/javascript" src="./rubbable.js"></script>
+    <!-- <script type="text/javascript" src="./rubbable.js"></script> -->
   </head>
   <body>
     <div id="onlineWarning" class="hide">
@@ -162,9 +162,9 @@
       <!-- Container for QR codes -->
       <div id="gif-frames-container"></div>
       <div>
-        <img id="uploadedGif" rel:auto_play="0" style="display: none" />
-
-        <!-- <input type="file" id="inputGifFile" accept="image/gif" /> -->
+        <div id="uploadedGifContainer">
+          <img id="uploadedGif" rel:auto_play="0" style="display: none" />
+        </div>
         <div>
           <input id="filename" class="hide" placeholder="Enter filename" />
           <button
@@ -186,11 +186,7 @@
           Click in textbox to copy contents to clipboard
         </p>
 
-        <button
-          id="resetButton"
-          class="hide"
-          onclick="window.location.reload()"
-        >
+        <button id="resetButton" class="hide" onclick="resetAndShowStart()">
           Reset
         </button>
       </div>
@@ -211,6 +207,42 @@
                 });
             });
           }
+        }
+        function hideAllImages() {
+          const images = document.querySelectorAll("img");
+          images.forEach((image) => {
+            image.classList.add("hide");
+          });
+        }
+        function showAllImages() {
+          const images = document.querySelectorAll("img");
+          images.forEach((image) => {
+            image.classList.remove("hide");
+          });
+        }
+        function addImageToContainer() {
+          var container = document.getElementById("uploadedGifContainer");
+
+          // Creating a new img element
+          var img = document.createElement("img");
+          img.id = "uploadedGif";
+          img.setAttribute("rel", 'auto_play="0"');
+          img.style.display = "none";
+
+          // Append the new img element to the "uploadedGifContainer" div
+          container.appendChild(img);
+        }
+        function resetAndShowStart() {
+          hideAllImages();
+          document.getElementById("form-container").classList.remove("hide");
+          document.getElementById("downloadGifButton").style.display = "none";
+          document.getElementById("inputTextFile").classList.remove("hide");
+          document.getElementById("resetButton").classList.add("hide");
+          document.getElementById("downloadButton").classList.add("hide");
+          document.getElementById("filename").classList.add("hide");
+          document.getElementById("qrCodeOutput").classList.add("hide");
+          document.getElementById("copymessage").classList.add("hide");
+          addImageToContainer();
         }
         function showAll() {
           document.getElementById("onlineWarning").classList.add("hide");
@@ -302,7 +334,7 @@
         }
 
         async function createGIF(qrCodes) {
-          document.getElementById("form-container").style.display = "none";
+          document.getElementById("form-container").classList.add("hide");
           const gif = new GIF({
             workers: 2,
             quality: 10,
@@ -330,6 +362,7 @@
               downloadButton.style.display = "inline-block"; // Show the button
               downloadButton.onclick = function () {
                 saveGIF(blob, "qr-seednumbers.gif");
+                resetAndShowStart();
               };
 
               resolve({ image, blob });
@@ -345,10 +378,12 @@
           document.body.appendChild(link);
           link.click();
           document.body.removeChild(link);
-          window.location.reload();
+          // show the startpage setup (no reload, for offline use)
+          resetAndShowStart();
         }
 
         document.addEventListener("DOMContentLoaded", async () => {
+          var sWorker = false;
           async function extractGIFFrames(file, delay = 50) {
             const objectURL = URL.createObjectURL(file);
             const img = new Image();
@@ -391,7 +426,9 @@
 
             URL.revokeObjectURL(objectURL);
           }
+
           setupServiceWorker();
+
           checkOnline();
         });
       </script>
@@ -404,7 +441,6 @@
 
             const img = document.getElementById("uploadedGif");
             img.setAttribute("rel:animated_src", objectURL);
-            img.src = objectURL; // This line may not be necessary depending on SuperGif's handling of rel:animated_src
 
             const sup1 = new SuperGif({ gif: img });
             sup1.load(() => {
@@ -450,7 +486,7 @@
           // Hide the GIF after the last frame has been processed
 
           canvas.remove();
-          document.getElementById("form-container").style.display = "none";
+          document.getElementById("form-container").classList.add("hide");
           document.getElementById("resetButton").classList.remove("hide");
           document.getElementById("downloadButton").classList.remove("hide");
           document.getElementById("filename").classList.remove("hide");
@@ -491,7 +527,7 @@
           .addEventListener("change", function () {
             if (this.files.length > 0) {
               // A file has been selected
-              document.body.style.backgroundColor = "#e0e0e0";
+              // document.body.style.backgroundColor = "#e0e0e0";
               document.getElementById("inputTextFile").classList.add("hide");
             }
           });
