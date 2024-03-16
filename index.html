@@ -196,11 +196,11 @@
       <script>
         function showAll() {
           document.getElementById("onlineWarning").classList.add("hide");
-          document.getElementById("app").classList.remove("hide");
+          document.getElementById("form-container").classList.remove("hide");
         }
         function hideAll() {
           document.getElementById("onlineWarning").classList.remove("hide");
-          document.getElementById("app").classList.add("hide");
+          document.getElementById("form-container").classList.add("hide");
         }
         async function copyTextToClipboard(element) {
           const text = document.getElementById(element).value;
