@@ -7,6 +7,7 @@ const urlsToCache = [
   '/index.min.js',
   '/libgif.js',
   './rubbable.js',
+  './gif.js',
   './service-worker.js'
 ];
 
