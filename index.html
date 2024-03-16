@@ -117,7 +117,9 @@
     <script type="text/javascript" src="./rubbable.js"></script>
   </head>
   <body>
-    <div>
+    <div id="onlineWarning" class="hide" style="color: red; font-size: 44px; margin-top:40px;">
+      You are online. Please disconnect from the internet to use this app.
+    <div id="app">
       <div id="form-container">
         <form id="inputForm">
           <input
@@ -186,6 +188,14 @@
         </button>
       </div>
       <script>
+        function showAll() {
+        document.getElementById('onlineWarning').classList.add('hide');
+        document.getElementById('app').classList.remove('hide');
+        }
+        function hideAll() {
+          document.getElementById('onlineWarning').classList.remove('hide');
+          document.getElementById('app').classList.add('hide');
+        }
         async function copyTextToClipboard(element) {
           const text = document.getElementById(element).value;
           try {
@@ -371,6 +381,7 @@
                 console.log("Service Worker registration failed:", err);
               });
           }
+          checkOnline();
         });
       </script>
       <script>
@@ -473,6 +484,29 @@
               document.getElementById("inputTextFile").classList.add("hide");
             }
           });
+      </script>
+      <script>
+        function checkOnline() {
+          if(navigator.onLine) {
+            hideAll();
+          } else {
+            showAll();
+          }
+        }
+              // Listen for online status
+      window.addEventListener('online', function(e) {
+        // console.log('You are online');
+        // Handle online status
+        hideAll();
+      });
+
+      // Listen for offline status
+      window.addEventListener('offline', function(e) {
+        // console.log('You are offline');
+        // Handle offline status
+        showAll();
+      });
+      
       </script>
     </div>
   </body>
