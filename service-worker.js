@@ -1,4 +1,4 @@
-const CACHE_NAME = 'v17';
+const CACHE_NAME = 'v18';
 const urlsToCache = [
   '/index.html',
   '/gif.js',
@@ -6,7 +6,6 @@ const urlsToCache = [
   '/jsQR.min.js',
   '/index.min.js',
   '/libgif.js',
-  './rubbable.js',
   './gif.worker.js',
   './service-worker.js'
 ];
