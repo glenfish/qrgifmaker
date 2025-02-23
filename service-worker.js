@@ -6,8 +6,7 @@ const urlsToCache = [
   '/jsQR.min.js',
   '/index.min.js',
   '/libgif.js',
-  './gif.worker.js',
-  './service-worker.js'
+  './gif.worker.js'
 ];
 
 // Install event - cache files
