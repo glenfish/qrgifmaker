@@ -1,12 +1,12 @@
 const CACHE_NAME = 'v20';
 const urlsToCache = [
-  '/index.html',
-  '/gif.js',
-  '/qrcode.min.js',
-  '/jsQR.min.js',
-  '/index.min.js',
-  '/libgif.js',
-  './gif.worker.js'
+  'index.html',
+  'gif.js',
+  'qrcode.min.js',
+  'jsQR.min.js',
+  'index.min.js',
+  'libgif.js',
+  'gif.worker.js'
 ];
 
 // Install event - cache files

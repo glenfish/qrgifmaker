@@ -130,12 +130,12 @@
         font-size: 13px;
       }
     </style>
-    <script src="./qrcode.min.js"></script>
-    <script src="./jsQR.min.js"></script>
-    <script src="./gif.js"></script>
-    <script src="./index.min.js"></script>
-    <script type="text/javascript" src="./libgif.js"></script>
-    <!-- <script type="text/javascript" src="./rubbable.js"></script> -->
+    <script src="qrcode.min.js"></script>
+    <script src="jsQR.min.js"></script>
+    <script src="gif.js"></script>
+    <script src="index.min.js"></script>
+    <script type="text/javascript" src="libgif.js"></script>
+    <!-- <script type="text/javascript" src="rubbable.js"></script> -->
   </head>
   <body>
     <div id="site-logo">
@@ -223,7 +223,7 @@
           if ("serviceWorker" in navigator) {
             window.addEventListener("load", function () {
               navigator.serviceWorker
-                .register("./service-worker.js")
+                .register("service-worker.js")
                 .then(function (registration) {
                   console.log(
                     "ServiceWorker registration successful with scope: ",
@@ -370,7 +370,7 @@
           const gif = new GIF({
             workers: 2,
             quality: 10,
-            workerScript: "./gif.worker.js", // Adjust the path as necessary
+            workerScript: "gif.worker.js", // Adjust the path as necessary
             width: 400,
             height: 400,
           });
