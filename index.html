@@ -243,6 +243,21 @@
           });
           document.getElementById("logo").classList.remove("hide");
         }
+        function deleteBlobImages() {
+          // Get all images on the page
+          var images = document.getElementsByTagName("img");
+
+          // Loop through each image
+          for (var i = 0; i < images.length; i++) {
+            var imageSrc = images[i].src.toLowerCase(); // Convert src to lowercase for case-insensitive comparison
+
+            // Check if the image src starts with "blob:"
+            if (imageSrc.startsWith("blob:")) {
+              // Remove the image from the DOM
+              images[i].parentNode.removeChild(images[i]);
+            }
+          }
+        }
         function showAllImages() {
           const images = document.querySelectorAll("img");
           images.forEach((image) => {
@@ -263,6 +278,7 @@
         }
         function resetAndShowStart() {
           hideAllImages();
+          deleteBlobImages();
           document.getElementById("inputGifFile").value = "";
           document.getElementById("gif-frames-container").innerHTML = "";
           document.getElementById("form-container").classList.remove("hide");
