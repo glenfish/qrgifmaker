@@ -6,21 +6,20 @@
     <title>QR Code Generator & Reader</title>
     <style>
       body {
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        justify-content: flex-start;
         font-family: Arial, Helvetica, sans-serif;
+        min-height: 98vh;
       }
       #form-container {
         display: flex;
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        border: 2px solid rgb(208, 208, 208);
+        /* border: 2px solid rgb(208, 208, 208); */
         padding: 40px;
         border-radius: 8px;
         width: 360px;
+        margin: auto;
+        padding-top: 20px;
       }
       /* Basic styling for QR codes */
       .qr-code {
@@ -30,7 +29,21 @@
         display: inline-block;
       }
       #downloadGifButton {
-        margin-top: 40px;
+        position: relative;
+        top: 170px;
+        margin: auto;
+        text-align: center;
+
+        height: 100px;
+        line-height: 50px;
+        font-size: 30px;
+        width: 380px;
+        background-color: #207224;
+        border: 10px solid rgb(105, 255, 12);
+      }
+      #downloadGifButton:hover {
+        background-color: #45ab4a;
+        border: 10px solid #9bffa0;
       }
       .hide {
         display: none !important;
@@ -78,19 +91,26 @@
         border: 1px solid rgb(208, 208, 208);
       }
       button {
-        padding: 10px;
-        font-size: 18px;
+        padding: 10px 20px 10px 20px;
+        font-size: 22px;
         border-radius: 5px;
         border: none;
         background-color: #4caf50;
         color: white;
         cursor: pointer;
         transition: 0.3s;
+        min-height: 50px;
       }
       input[type="text"] {
-        padding: 8px;
-        font-size: 16px;
-        width: 95px;
+        padding: 8px !important;
+        font-size: 16px !important;
+        width: 194px !important;
+        border-radius: 4px !important;
+        border: 1px solid gray !important;
+        height: 32px !important;
+        margin: 0 auto;
+        position: relative;
+        top: -2px;
       }
       input[type="file"] {
         padding: 22px;
@@ -99,35 +119,121 @@
         position: relative;
         left: -22px;
       }
-      #filename {
+      textarea {
+        background-color: rgb(255, 255, 255);
+        color: rgb(57, 57, 57);
+        font-size: 22px;
+        max-width: 900px;
+        margin-top: 10px;
+        letter-spacing: 2px;
+        max-height: 400px;
+      }
+      /* #filename {
         padding: 8px;
         font-size: 16px;
         width: 230px;
-      }
+      } */
       label {
-        font-size: 16px;
+        font-size: 22px;
+        user-select: none;
+        min-width: 290px !important;
       }
       #onlineWarning {
         color: red;
         font-size: 44px;
         text-align: center;
-        margin-top: 30px;
+        margin-top: 100px;
       }
-      #site-logo {
+      #coldStorageQR {
+        height: 160px;
+        width: 96vw;
+        margin: 40px auto 0 auto;
+        text-align: center;
+
+        /* background-color: red; */
+        overflow: hidden;
+      }
+      .logo {
+        height: 330px;
+        margin: auto;
         position: relative;
-        top: 0px;
-        margin-bottom: 0px;
-        display: block !important;
+        top: -80px;
       }
       #app {
         position: relative;
-        margin-top: 0px;
+        top: 80px;
+        margin: auto;
+        display: block;
+        text-align: center;
       }
-      textarea {
-        padding: 5px;
+      img {
+        margin: auto;
+        display: block;
       }
-      .smalltext {
-        font-size: 13px;
+      #copymessage {
+        text-align: center;
+      }
+      .custom-file-upload {
+        display: inline-block;
+        padding: 6px 12px;
+        cursor: pointer;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        transition: background-color 0.3s;
+        min-width: 200px;
+        height: 2em;
+        line-height: 2em;
+      }
+
+      .green-background {
+        background-color: #4caf50;
+        border: 2px transparent solid;
+      }
+      .green-background:hover {
+        background-color: #207224;
+        border: 2px rgb(35, 249, 35) solid;
+      }
+      .orange-background {
+        background-color: #d59900;
+        border: 2px transparent solid;
+      }
+      .orange-background:hover {
+        background-color: #886100;
+        border: 2px rgb(255, 200, 0) solid;
+      }
+      input[type="file"] {
+        display: none;
+      }
+      #myUploadedText {
+        width: 390px;
+        height: 400px;
+        margin: 20px auto;
+        position: relative;
+        top: -100px;
+      }
+      #generateQRCodesButton {
+        position: relative;
+        top: -70px;
+      }
+      #cancelButton {
+        display: block;
+        margin: auto;
+        position: relative;
+        top: 0px;
+        background-color: gray;
+      }
+      #filesLoading {
+        color: black;
+        font-size: 44px;
+        text-align: center;
+        margin-top: 100px;
+      }
+      #filesLoaded {
+        color: green;
+        font-size: 44px;
+        text-align: center;
+        margin-top: 100px;
       }
     </style>
     <script src="qrcode.min.js"></script>
@@ -135,67 +241,85 @@
     <script src="gif.js"></script>
     <script src="index.min.js"></script>
     <script type="text/javascript" src="libgif.js"></script>
-    <!-- <script type="text/javascript" src="rubbable.js"></script> -->
+    <!-- <script type="text/javascript" src="./rubbable.js"></script> -->
   </head>
   <body>
-    <div id="site-logo">
-      <img id="logo" class="logo" src="qr-logo.webp" height="200px" />
+    <div id="coldStorageQR">
+      <img
+        title="reset and reload page"
+        class="logo"
+        src="coldstorageqr.webp"
+        alt="Cold Storage QR Logo"
+      />
     </div>
     <div id="onlineWarning" class="hide">
       You are online.<br />Please disconnect<br />from the internet<br />to use
-      this app.<br /><br /><span class="smalltext"
-        >* If you experience problems delete your browser cache / history<br />
-        or <a href="https://qrmake-eight.vercel.app">try this version</a></span
-      >
+      this app
+    </div>
+    <div id="filesLoading" class="hide">
+      Please wait while<br />files are loading.
+    </div>
+    <div id="filesLoaded" class="hide">
+      Files have been made<br />available offline.<br /><br />You can turn<br />off
+      your wifi now.
     </div>
 
     <div id="app">
       <div id="form-container">
-        <form id="inputForm">
+        <form id="inputForm" method="post">
           <input
             class="hide"
             type="text"
             id="inputText"
             placeholder="Enter numbers separated by commas"
           />
-          <label for="inputText">Load Data & Make QR Code:</label><br /><br />
-          <input type="file" id="inputTextFile" accept=".txt,.csv" /><br />
-          <button id="generateQRCodesButton" type="submit">
-            Generate QR Codes
+          <label
+            class="custom-file-upload orange-background"
+            for="inputTextFile"
+            id="inputTextFileLabel"
+            >Load Data > Make QR Code</label
+          ><br /><br />
+          <input type="file" id="inputTextFile" accept=".txt,.csv" />
+          <textarea id="myUploadedText" class="hide" readonly></textarea>
+          <button id="generateQRCodesButton" type="submit" class="hide">
+            CREATE QR
           </button>
         </form>
         <br />
-        <hr />
+        <!-- <hr /> -->
         <br />
         <div style="display: inline-block">
-          <label for="inputGifFile">Load & Read QR Code (gif):</label
+          <label
+            id="inputGifFileLabel"
+            class="custom-file-upload green-background"
+            for="inputGifFile"
+            >Load QR Code > Get Data</label
           ><br /><br />
           <input type="file" id="inputGifFile" accept=".gif" />
-          <br />
-          <span class="smalltext"
-            >Problems?&nbsp;
-            <a href="https://qrmake-eight.vercel.app">Try this version</a>
-          </span>
         </div>
       </div>
-      <br /><br />
+
       <div id="qrCodeContainer"></div>
 
-      <div style="width: 100%">
-        <button id="downloadGifButton" style="display: none">
-          Download GIF
-        </button>
-        <br /><br />
-      </div>
-      <div id="tooltip" class="tooltip">Text copied!</div>
+      <div id="tooltip" class="tooltip">Text copied to clipboard!</div>
       <!-- Container for QR codes -->
       <div id="gif-frames-container"></div>
+      <div style="width: 100%">
+        <button id="downloadGifButton" style="margin: auto" class="hide">
+          Download GIF
+        </button>
+      </div>
       <div>
         <div id="uploadedGifContainer">
           <img id="uploadedGif" rel:auto_play="0" style="display: none" />
         </div>
         <div>
-          <input id="filename" class="hide" placeholder="Enter filename" />
+          <input
+            id="filename"
+            class="hide"
+            type="text"
+            placeholder="Enter filename"
+          />
           <button
             id="downloadButton"
             class="hide"
@@ -205,14 +329,15 @@
           </button>
         </div>
         <textarea
-          readonly
           id="qrCodeOutput"
           rows="26"
           cols="29"
           class="hide"
           onclick="copyTextToClipboard('qrCodeOutput')"
         ></textarea>
-        <p id="copymessage" class="hide"></p>
+        <p id="copymessage" class="hide">
+          Click in textbox to copy contents to clipboard
+        </p>
 
         <button id="resetButton" class="hide" onclick="resetAndShowStart()">
           Reset
@@ -236,13 +361,7 @@
             });
           }
         }
-        function hideAllImages() {
-          const images = document.querySelectorAll("img");
-          images.forEach((image) => {
-            image.classList.add("hide");
-          });
-          document.getElementById("logo").classList.remove("hide");
-        }
+
         function deleteBlobImages() {
           // Get all images on the page
           var images = document.getElementsByTagName("img");
@@ -258,12 +377,7 @@
             }
           }
         }
-        function showAllImages() {
-          const images = document.querySelectorAll("img");
-          images.forEach((image) => {
-            image.classList.remove("hide");
-          });
-        }
+
         function addImageToContainer() {
           var container = document.getElementById("uploadedGifContainer");
 
@@ -276,28 +390,44 @@
           // Append the new img element to the "uploadedGifContainer" div
           container.appendChild(img);
         }
+
         function resetAndShowStart() {
-          hideAllImages();
           deleteBlobImages();
           document.getElementById("inputGifFile").value = "";
           document.getElementById("gif-frames-container").innerHTML = "";
           document.getElementById("form-container").classList.remove("hide");
-          document.getElementById("downloadGifButton").style.display = "none";
+          document.getElementById("downloadGifButton").classList.add("hide");
           document.getElementById("inputTextFile").classList.remove("hide");
           document.getElementById("resetButton").classList.add("hide");
           document.getElementById("downloadButton").classList.add("hide");
           document.getElementById("filename").classList.add("hide");
           document.getElementById("qrCodeOutput").classList.add("hide");
           document.getElementById("copymessage").classList.add("hide");
+          document.getElementById("qrCodeOutput").value = "";
+          document.getElementById("inputGifFileLabel").classList.remove("hide");
+          document
+            .getElementById("inputTextFileLabel")
+            .classList.remove("hide");
+          document.getElementById("downloadGifButton").classList.add("hide");
+          document
+            .getElementById("generateQRCodesButton")
+            .classList.add("hide");
+
+          document.getElementById("myUploadedText").value = "";
+          document.getElementById("myUploadedText").classList.add("hide");
 
           addImageToContainer();
         }
+
         function showAll() {
           document.getElementById("onlineWarning").classList.add("hide");
+          document.getElementById("filesLoading").classList.add("hide");
+          document.getElementById("filesLoaded").classList.add("hide");
           document.getElementById("app").classList.remove("hide");
         }
         function hideAll() {
           document.getElementById("onlineWarning").classList.remove("hide");
+          document.getElementById("filesLoaded").classList.add("hide");
           document.getElementById("app").classList.add("hide");
         }
         async function copyTextToClipboard(element) {
@@ -335,14 +465,41 @@
                 }
               }
             } catch (error) {
-              console.error(error);
+              return;
             }
           });
+
+        async function getFileContents() {
+          const inputText = document.getElementById("inputText").value;
+          const inputFile = document.getElementById("inputTextFile").files[0];
+
+          if (inputText) {
+            return inputText.split(",").map((num) => num.trim());
+          } else if (inputFile) {
+            return new Promise((resolve, reject) => {
+              const fileReader = new FileReader();
+              fileReader.onload = function (e) {
+                let text = e.target.result;
+                text = text.replace(/[\s\n\r]+$/, "");
+                resolve(text.split("\n").map((num) => num.trim()));
+                document.getElementById("myUploadedText").value = text;
+                document
+                  .getElementById("myUploadedText")
+                  .classList.remove("hide");
+              };
+              fileReader.onerror = reject;
+              fileReader.readAsText(inputFile);
+            });
+          } else {
+            alert("No input provided");
+            return [];
+          }
+        }
 
         async function getInputArray() {
           const inputText = document.getElementById("inputText").value;
           const inputFile = document.getElementById("inputTextFile").files[0];
-
+          document.getElementById("inputTextFile").value = "";
           if (inputText) {
             return inputText.split(",").map((num) => num.trim());
           } else if (inputFile) {
@@ -357,7 +514,7 @@
               fileReader.readAsText(inputFile);
             });
           } else {
-            alert("Choose a text file to make into an animated QR code gif!");
+            alert("No input provided");
             return [];
           }
         }
@@ -407,7 +564,8 @@
               // Make the download button visible and set the download link
               const downloadButton =
                 document.getElementById("downloadGifButton");
-              downloadButton.style.display = "inline-block"; // Show the button
+              // downloadButton.style.display = "block"; // Show the button
+              downloadButton.classList.remove("hide");
               downloadButton.onclick = function () {
                 saveGIF(blob, "qr-seednumbers.gif");
                 resetAndShowStart();
@@ -476,7 +634,6 @@
           }
 
           setupServiceWorker();
-
           checkOnline();
         });
       </script>
@@ -486,7 +643,7 @@
           .addEventListener("change", function () {
             const file = this.files[0];
             const objectURL = URL.createObjectURL(file);
-
+            document.getElementById("form-container").classList.add("hide");
             const img = document.getElementById("uploadedGif");
             img.setAttribute("rel:animated_src", objectURL);
 
@@ -577,6 +734,17 @@
               // A file has been selected
               // document.body.style.backgroundColor = "#e0e0e0";
               document.getElementById("inputTextFile").classList.add("hide");
+              document
+                .getElementById("generateQRCodesButton")
+                .classList.remove("hide");
+
+              document
+                .getElementById("inputTextFileLabel")
+                .classList.add("hide");
+              document
+                .getElementById("inputGifFileLabel")
+                .classList.add("hide");
+              getFileContents();
             }
           });
       </script>
@@ -594,6 +762,25 @@
         });
         window.addEventListener("offline", function (e) {
           checkOnline();
+        });
+      </script>
+      <script>
+        // Listen for messages from the service worker
+        navigator.serviceWorker.addEventListener("message", function (event) {
+          let isOfflineReady = false;
+          if (event.data.message === "offlineReady") {
+            isOfflineReady = true;
+          }
+          if (isOfflineReady) {
+            console.log("Offline ready");
+            document.getElementById("filesLoading").classList.add("hide");
+            document.getElementById("filesLoaded").classList.remove("hide");
+          } else {
+            // reload after 5 seconds
+            setTimeout(function () {
+              location.reload();
+            }, 5000);
+          }
         });
       </script>
     </div>
