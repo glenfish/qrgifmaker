@@ -263,6 +263,8 @@
         }
         function resetAndShowStart() {
           hideAllImages();
+          document.getElementById("inputGifFile").value = "";
+          document.getElementById("gif-frames-container").innerHTML = "";
           document.getElementById("form-container").classList.remove("hide");
           document.getElementById("downloadGifButton").style.display = "none";
           document.getElementById("inputTextFile").classList.remove("hide");
